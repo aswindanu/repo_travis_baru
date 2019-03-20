@@ -16,7 +16,7 @@ app = Flask(__name__)
 api = Api(app, catch_all_404s=True)
 
 # ===== SQLAlchemy =====
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://danu:@13.250.129.32:3306/eCommerce'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://danu:@172.31.46.60:3306/eCommerce'
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 db = SQLAlchemy(app)
 
