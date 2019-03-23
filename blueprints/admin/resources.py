@@ -95,14 +95,18 @@ class AdminResource(Resource):
     # for make ID admin
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('key', location='json', required=True)
-        parser.add_argument('secret', location='json', required=True)
+        parser.add_argument('username', location='json', required=True)
+        parser.add_argument('password', location='json', required=True)
+        parser.add_argument('fullname', location='json', required=True)
+        parser.add_argument('address', location='json', required=True)
+        parser.add_argument('zip_code', location='json', type=int, required=True)
+        parser.add_argument('image', location='json', required=True)
         parser.add_argument('code_admin', location='json', required=True)
         args = parser.parse_args()
 
         # ==========(sentralize)==========
         if args['code_admin'] == 'warcr4ft':
-            admin = Users(None, 'admin', args['key'], args['secret'], 'active')
+            admin = Users(None, 'admin', args['username'], args['password'], args['fullname'], args['address'], args['zip_code'], args['image'], 'active')
             db.session.add(admin)
             db.session.commit()
             return marshal(admin, Users.response_field), 200, { 'Content-Type': 'application/json' }

@@ -12,15 +12,15 @@ api = Api(bp_auth)
 class CreateTokenResources(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('key', location='json', required=True)
-        parser.add_argument('secret', location='json', required=True)
+        parser.add_argument('username', location='json', required=True)
+        parser.add_argument('password', location='json', required=True)
         args = parser.parse_args()
-        token_data = Users.query.filter_by(key=args['key']).filter_by(secret=args['secret']).first()
+        token_data = Users.query.filter_by(username=args['username']).filter_by(password=args['password']).first()
         # ==========(sentralize)==========
         if token_data is not None:
             token = create_access_token(marshal(token_data, Users.response_field))
             return{ 'token': token }, 200
         else:
-            return{ 'status': 'UNAUTHORIZED', 'message': 'Invalid key or secret' }, 401
+            return{ 'status': 'UNAUTHORIZED', 'message': 'Invalid username or password' }, 401
 
 api.add_resource(CreateTokenResources, '')

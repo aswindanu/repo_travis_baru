@@ -1,119 +1,95 @@
-[2019-03-19 10:46:21,873] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+[2019-03-23 16:20:03,732] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
-[2019-03-19 10:46:32,848] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
+    response = self.process_response(response)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
+    response = handler(response)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
+    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
+  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2019-03-23 16:20:45,703] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
-[2019-03-19 10:48:11,398] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
+    response = self.process_response(response)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
+    response = handler(response)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
+    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
+  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2019-03-23 16:20:50,584] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
-[2019-03-19 10:51:44,994] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
+    response = self.process_response(response)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
+    response = handler(response)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
+    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
+  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2019-03-23 16:20:57,883] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
-[2019-03-19 10:53:59,820] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
+    response = self.process_response(response)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
+    response = handler(response)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
+    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
+  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2019-03-23 16:23:43,324] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
-[2019-03-19 10:54:32,841] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
-[2019-03-19 10:55:22,735] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 122, in put
-    if cart.user_pembeli == get_jwt_claims['key']:
-TypeError: 'function' object is not subscriptable
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
+    response = self.process_response(response)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
+    response = handler(response)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
+    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
+  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

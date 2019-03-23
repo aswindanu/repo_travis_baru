@@ -1,4 +1,4 @@
-[2019-03-17 19:11:04,759] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [POST]
+[2019-03-23 02:33:31,857] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -12,39 +12,10 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 60, in post
-    calc = barang['jumlah'] - args['jumlah']
-TypeError: 'Barangs' object is not subscriptable
-[2019-03-17 19:26:16,804] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 103, in wrapper
-    verify_jwt_in_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
-    jwt_data = _decode_jwt_from_request(request_type='access')
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 267, in _decode_jwt_from_request
-    decoded_token = decode_token(encoded_token, csrf_token)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 105, in decode_token
-    allow_expired=allow_expired
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/tokens.py", line 138, in decode_jwt
-    leeway=leeway, options=options)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 104, in decode
-    self._validate_claims(payload, merged_options, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 134, in _validate_claims
-    self._validate_exp(payload, now, leeway)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 175, in _validate_exp
-    raise ExpiredSignatureError('Signature has expired')
-jwt.exceptions.ExpiredSignatureError: Signature has expired
-[2019-03-17 19:28:05,724] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 90, in put
+    transaksi_detail = Transactions.query.get(get_jwt_claims['id'])
+TypeError: 'function' object is not subscriptable
+[2019-03-23 02:35:11,757] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -58,10 +29,14 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 118, in put
-    if jumlah_tambah == None:
-NameError: name 'jumlah_tambah' is not defined
-[2019-03-17 19:29:03,839] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 91, in put
+    courier = Couriers.query.get(args['pengiriman'])
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
+    if len(primary_key_identity) != len(mapper.primary_key):
+TypeError: object of type 'NoneType' has no len()
+[2019-03-23 02:35:59,159] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -75,10 +50,14 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 118, in put
-    if jumlah_tambah == None:
-NameError: name 'jumlah_tambah' is not defined
-[2019-03-17 19:29:22,867] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 91, in put
+    courier = Couriers.query.get(args['pengiriman'])
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
+    if len(primary_key_identity) != len(mapper.primary_key):
+TypeError: object of type 'NoneType' has no len()
+[2019-03-23 02:36:49,353] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -92,10 +71,14 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 118, in put
-    if jumlah_tambah == None:
-NameError: name 'jumlah_tambah' is not defined
-[2019-03-17 19:30:39,336] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 91, in put
+    courier = Couriers.query.get(args['pengiriman'])
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
+    if len(primary_key_identity) != len(mapper.primary_key):
+TypeError: object of type 'NoneType' has no len()
+[2019-03-23 02:37:26,228] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -109,10 +92,14 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 118, in put
-    if jumlah_tambah == None:
-NameError: name 'jumlah_tambah' is not defined
-[2019-03-17 19:30:52,637] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 92, in put
+    courier = Couriers.query.get(args['pengiriman'])
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
+    if len(primary_key_identity) != len(mapper.primary_key):
+TypeError: object of type 'NoneType' has no len()
+[2019-03-23 02:38:24,082] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -126,6 +113,6 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 118, in put
-    if jumlah_tambah == None:
-NameError: name 'jumlah_tambah' is not defined
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 102, in put
+    transaksi_detail.pembayaran = bank.nama_bank
+AttributeError: 'NoneType' object has no attribute 'nama_bank'

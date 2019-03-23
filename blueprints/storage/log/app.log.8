@@ -1,4 +1,4 @@
-[2019-03-17 19:31:24,627] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [PUT]
+[2019-03-23 02:38:48,460] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -12,17 +12,10 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 118, in put
-    if jumlah_tambah == 0:
-NameError: name 'jumlah_tambah' is not defined
-[2019-03-17 19:45:00,725] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [DELETE]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1978, in delete
-    state = attributes.instance_state(instance)
-AttributeError: 'BaseQuery' object has no attribute '_sa_instance_state'
-
-During handling of the above exception, another exception occurred:
-
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 102, in put
+    transaksi_detail.pembayaran = bank.nama_bank
+AttributeError: 'NoneType' object has no attribute 'nama_bank'
+[2019-03-23 02:39:20,899] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -36,14 +29,10 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 153, in delete
-    db.session.delete(cart_all)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
-    return getattr(self.registry(), name)(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1980, in delete
-    raise exc.UnmappedInstanceError(instance)
-sqlalchemy.orm.exc.UnmappedInstanceError: Class 'flask_sqlalchemy.BaseQuery' is not mapped
-[2019-03-17 19:52:14,979] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [DELETE]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 102, in put
+    transaksi_detail.pembayaran = bank.nama_bank
+AttributeError: 'NoneType' object has no attribute 'nama_bank'
+[2019-03-23 02:40:33,422] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -57,44 +46,10 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 165, in delete
-    barang.jumlah = calc_barang
-NameError: name 'calc_barang' is not defined
-[2019-03-17 19:52:23,996] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [DELETE]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 165, in delete
-    barang.jumlah = calc_barang
-NameError: name 'calc_barang' is not defined
-[2019-03-17 19:54:28,015] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [DELETE]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 159, in delete
-    total_barang = barang.jumlah + cart.jumlah
-AttributeError: 'NoneType' object has no attribute 'jumlah'
-[2019-03-18 19:00:12,951] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [GET]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 103, in put
+    transaksi_detail.pembayaran = bank.nama_bank
+AttributeError: 'NoneType' object has no attribute 'nama_bank'
+[2019-03-23 11:21:20,245] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /stuff [DELETE]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()

@@ -1,15 +1,11 @@
 import random, logging
 from blueprints import db
 from flask_restful import fields
-from ..stuff import *
 
-class Carts(db.Model):
-    barang = Stuffs
+class Stuffs(db.Model):
 
-    __tablename__ = "cart"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    resi = db.Column(db.Integer)
-    username = db.Column(db.String(50)) 
+    __tablename__ = "stuff"
+    resi = db.Column(db.Integer, primary_key=True, unique=True)
     barang = db.Column(db.String(50))
     image = db.Column(db.String(200))
     deskripsi = db.Column(db.String(200))
@@ -20,9 +16,7 @@ class Carts(db.Model):
 
     # ===== Respon Field =====
     response_field = {
-        'id': fields.Integer,
         'resi' : fields.Integer,
-        'username' : fields.String,
         'barang' : fields.String,
         'image' : fields.String,
         'deskripsi' : fields.String,
@@ -32,10 +26,8 @@ class Carts(db.Model):
         'jumlah' : fields.Integer
     }
     
-    def __init__(self, id, resi, username, barang, image, deskripsi, jenis, harga, status, jumlah):
-        self.id = id
+    def __init__(self, resi, barang, image, deskripsi, jenis, harga, status, jumlah):
         self.resi = resi
-        self.username = username
         self.barang = barang
         self.image = image
         self.deskripsi = deskripsi
@@ -45,4 +37,4 @@ class Carts(db.Model):
         self.jumlah = jumlah
 
     def __repr__(self):
-        return '<Cart %r>' % self.id
+        return '<Barang %r>' % self.resi

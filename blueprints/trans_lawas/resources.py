@@ -11,13 +11,13 @@ from blueprints.auth import *
 from . import *
 from ..stuff import *
 
-bp_cart = Blueprint('cart', __name__)
-api = Api(bp_cart)
+bp_transaction = Blueprint('transaction', __name__)
+api = Api(bp_transaction)
 
 
 #### book RESOURCE CLASS
 #### All Data
-class CartResource(Resource):
+class TransResource(Resource):
     @jwt_required
     def get(self, id=None):
         if id == None:
@@ -33,16 +33,16 @@ class CartResource(Resource):
                 # Memunculkan data semua (ditampilkan sesuai jumlah rp)
                 cart_all = Carts.query
                 get_all = []
-                for get_data in cart_all.limit(args['rp']).offset(offset).all():
-                    if get_data.username == get_jwt_claims()['username']:
-                        get_all.append(marshal(get_data, Carts.response_field))
+                for get_data in cart_all:#.limit(args['rp']).offset(offset).all():
+                    if get_data.user_pembeli == get_jwt_claims()['key']:
+                        get_all.append(marshal(get_data, Transactions.response_field))
                 return get_all, 200, { 'Content-Type': 'application/json' }
             
         else:
             if get_jwt_claims()['type'] == 'client':
-                cart = Carts.query.get(id)
-                if cart is not None and cart.username == get_jwt_claims()['username']:
-                    return marshal(cart, Carts.response_field), 200, { 'Content-Type': 'application/json' }
+                cart = Transactions.query.get(id)
+                if cart is not None and cart.user_pembeli == get_jwt_claims()['key']:
+                    return marshal(cart, Transactions.response_field), 200, { 'Content-Type': 'application/json' }
                 return {'status': 'NOT_FOUND', 'message': 'Anda belum membeli apapun'}, 404, { 'Content-Type': 'application/json' }
 
     @jwt_required
@@ -55,46 +55,18 @@ class CartResource(Resource):
             
             # Fungsi memanggil tabel barang
             barang = Stuffs.query.get(args['resi'])
-            cart = Carts.query
-            cart_data = marshal(cart, Carts.response_field)
-            
-            # ==========(sentralize)==========
-            calc_cart = args['jumlah']
-            cart_belanja = []
-            cart_other = []
-            id_cart = 1
 
-            if len(cart_data) > 1:
-                for get_data in cart:
-                    if get_data.username == get_jwt_claims()['username']:
-                        if get_data.resi == args['resi']:
-                            calc_cart = get_data.jumlah + calc_cart
-                            id_cart = get_data.id
-                            db.session.delete(get_data)
-                        if get_data.resi != args['resi']:
-                            id_cart = args['resi']
-                            cart_belanja.append(marshal(get_data, Carts.response_field))
-                    if get_data.username != get_jwt_claims()['username']:
-                        continue
-                        
-            # return "TES"
-            if len(cart_data) == 1 and cart.username == get_jwt_claims()['username'] and cart.resi == args['resi']:
-                calc_cart = cart.jumlah + calc_cart
-                id_cart = args['resi']
-            
-            if len(cart_data) == 0:
-                id_cart = None
-            
-            # Kalkulasi sisa barang            
+
+            # ==========(sentralize)==========
+            # Kalkulasi sisa barang
             calc_barang = barang.jumlah - args['jumlah']
-            # return "OKE"
+            
             if calc_barang < 0:
                 return {'status':'NOT_AVAILABLE', 'message':'The quantity stuff that requested is too many'}, 200, { 'Content-Type': 'application/json' }
             if calc_barang > barang.jumlah:
                 return {'status':'INVALID', 'message':"Too many stuff that you've input. Please check again"}, 200, { 'Content-Type': 'application/json' }
 
             barang.barang = barang.barang
-            barang.image = barang.image
             barang.deskripsi = barang.deskripsi
             barang.jenis = barang.jenis
             barang.harga = barang.harga
@@ -106,24 +78,20 @@ class CartResource(Resource):
             
             barang.status = barang.status
             barang.jumlah = calc_barang
-            # return "TEST"
             db.session.commit()
 
             # untuk cart
-            cart_add = Carts(id_cart, args['resi'], None, None, None, None, None, None, None, None)
-            # return "OI"
-            cart_add.username = get_jwt_claims()['username']
+            cart_add = Transactions(None, args['resi'], None, None, None, None, None, None, None)
+            cart_add.user_pembeli = get_jwt_claims()['key']
             cart_add.barang = barang.barang
-            cart_add.image = barang.image
             cart_add.deskripsi = barang.deskripsi
             cart_add.jenis = barang.jenis
             cart_add.harga = barang.harga
-            cart_add.status = "Success"
-            cart_add.jumlah = calc_cart
+            cart_add.status = barang.status
+            cart_add.jumlah = args['jumlah']
             db.session.add(cart_add)
             db.session.commit()
-
-            return marshal(cart_add, Carts.response_field), 200, { 'Content-Type': 'application/json' }
+            return marshal(cart_add, Transactions.response_field), 200, { 'Content-Type': 'application/json' }
         return {'status': 'USERS_ONLY', 'message': 'Only for users'}, 404, { 'Content-Type': 'application/json' }
 
     @jwt_required
@@ -131,27 +99,23 @@ class CartResource(Resource):
         if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin':
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int, required=True)
-            parser.add_argument('jumlah_tambah', location='json', type=int)
-            parser.add_argument('jumlah_kurang', location='json', type=int)
+            parser.add_argument('resi', location='json', type=int, required=True)
+            parser.add_argument('jumlah_tambah', location='json', type=int, default=0)
+            parser.add_argument('jumlah_kurang', location='json', type=int, default=0)
             args = parser.parse_args()
             
             # ambil dari resi json
-            cart = Carts.query.get(args['id'])
-            barang = Stuffs.query.get(cart.resi)
-            # return marshal(cart, Carts.response_field), 200, { 'Content-Type': 'application/json' }
-            # return get_jwt_claims()['username']
-            if cart.username != get_jwt_claims()['username'] or cart == None:
-                return { 'status':'NOT_FOUND', 'message': 'Please check again your ID input' }, 200, { 'Content-Type': 'application/json' }
+            barang = Stuffs.query.get(args['resi'])
+            cart = Transactions.query.get(args['id'])
 
-            if cart.username == get_jwt_claims()['username']:
+            if cart.user_pembeli == get_jwt_claims['key']:
                 total_barang = barang.jumlah + cart.jumlah
-                
 
-                if args['jumlah_kurang'] != None:
+                if args['jumlah_tambah'] == 0:
                     calc_barang = barang.jumlah + args['jumlah_kurang']
                     calc_cart = cart.jumlah - args['jumlah_kurang']
 
-                if args['jumlah_tambah'] != None:
+                if args['jumlah_kurang'] == 0:
                     calc_barang = barang.jumlah - args['jumlah_tambah']
                     calc_cart = cart.jumlah + args['jumlah_tambah']
                 
@@ -164,40 +128,34 @@ class CartResource(Resource):
 
                 # Untuk barang
                 barang.barang = barang.barang
-                barang.image = barang.image
                 barang.deskripsi = barang.deskripsi
                 barang.jenis = barang.jenis
                 barang.harga = barang.harga
 
+                if barang.status == 'Not_Available' and calc_barang > 0:
+                    barang.status = 'Available'
+                    
                 # jika sisa 0, maka not available
                 if calc_barang == 0:
                     barang.status = "Not_Available"
                     barang.jumlah = 0
-                
-                if  barang.status == 'Not_Available' and  calc_barang > 0:
-                    barang.status = 'Available'
-                    barang.jumlah = calc_barang
 
-                if barang.jumlah > 0:
-                    barang.jumlah = calc_barang
-
+                barang.status = barang.status
+                barang.jumlah = calc_barang
                 db.session.commit()
 
                 # untuk cart
                 cart.resi = cart.resi
-                cart.username = cart.username
+                cart.user_pembeli = cart.user_pembeli
                 cart.barang = cart.barang
-                cart.image = cart.image
                 cart.deskripsi = cart.deskripsi
                 cart.jenis = cart.jenis
                 cart.harga = cart.harga
-                cart.status = "Success"
+                cart.status = cart.status
                 cart.jumlah = calc_cart
-                if cart.jumlah == 0:
-                    db.session.delete(cart) 
                 db.session.commit()
 
-            return marshal(cart, Carts.response_field), 200, { 'Content-Type': 'application/json' }
+            return marshal(cart, Transactions.response_field), 200, { 'Content-Type': 'application/json' }
         return {'status': 'USERS_ONLY', 'message': 'Only for users'}, 404, { 'Content-Type': 'application/json' }
 
     @jwt_required
@@ -205,16 +163,16 @@ class CartResource(Resource):
         if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin':
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int, required=True)
+            parser.add_argument('resi', location='json', type=int, required=True)
             args = parser.parse_args()
 
-            cart = Carts.query.get(args['id'])
-            barang = Stuffs.query.get(cart.resi)
+            barang = Stuffs.query.get(args['resi'])
+            cart = Transactions.query.get(args['id'])
 
-            if cart.username == get_jwt_claims()['username']:
+            if cart.user_pembeli == get_jwt_claims()['key']:
                 total_barang = barang.jumlah + cart.jumlah
 
                 barang.barang = barang.barang
-                barang.image = barang.image
                 barang.deskripsi = barang.deskripsi
                 barang.jenis = barang.jenis
                 barang.harga = barang.harga
@@ -229,4 +187,4 @@ class CartResource(Resource):
         return {'status': 'USERS_ONLY', 'message': 'Only for users'}, 404, { 'Content-Type': 'application/json' }
 
 
-api.add_resource(CartResource,'', '/<int:id>')
+api.add_resource(TransResource,'', '/<int:id>')

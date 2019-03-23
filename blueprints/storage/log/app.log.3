@@ -1,4 +1,4 @@
-[2019-03-18 22:45:20,361] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [POST]
+[2019-03-23 15:45:26,325] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /admin [POST]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
     cursor, statement, parameters, context
@@ -20,7 +20,7 @@ Traceback (most recent call last):
     err.raise_mysql_exception(self._data)
   File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
     raise errorclass(errno, errval)
-pymysql.err.IntegrityError: (1062, "Duplicate entry '78947' for key 'PRIMARY'")
+pymysql.err.IntegrityError: (1062, "Duplicate entry 'aswinda' for key 'username'")
 
 The above exception was the direct cause of the following exception:
 
@@ -35,9 +35,7 @@ Traceback (most recent call last):
     return self.dispatch_request(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
     resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/cart/resources.py", line 92, in post
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/admin/resources.py", line 111, in post
     db.session.commit()
   File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
     return getattr(self.registry(), name)(*args, **kwargs)
@@ -63,8 +61,8 @@ Traceback (most recent call last):
     uow,
   File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
     insert,
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
-    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 1120, in _emit_insert_statements
+    statement, params
   File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 988, in execute
     return meth(self, multiparams, params)
   File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
@@ -99,7 +97,26 @@ Traceback (most recent call last):
     err.raise_mysql_exception(self._data)
   File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
     raise errorclass(errno, errval)
-sqlalchemy.exc.IntegrityError: (pymysql.err.IntegrityError) (1062, "Duplicate entry '78947' for key 'PRIMARY'")
-[SQL: INSERT INTO cart (resi, user_pembeli, barang, deskripsi, jenis, harga, status, jumlah) VALUES (%(resi)s, %(user_pembeli)s, %(barang)s, %(deskripsi)s, %(jenis)s, %(harga)s, %(status)s, %(jumlah)s)]
-[parameters: {'resi': 78947, 'user_pembeli': 'danu', 'barang': 'juggernaut clothes', 'deskripsi': 'Barang mulus, 90% original', 'jenis': 'mainan', 'harga': 60000, 'status': 'Available', 'jumlah': 3}]
+sqlalchemy.exc.IntegrityError: (pymysql.err.IntegrityError) (1062, "Duplicate entry 'aswinda' for key 'username'")
+[SQL: INSERT INTO user (type, username, password, fullname, address, zip_code, image, status) VALUES (%(type)s, %(username)s, %(password)s, %(fullname)s, %(address)s, %(zip_code)s, %(image)s, %(status)s)]
+[parameters: {'type': 'admin', 'username': 'aswinda', 'password': 'blablabla', 'fullname': 'aswindanu', 'address': 'Malang', 'zip_code': 65124, 'image': 'http://pbs.twimg.com/profile_images/808475349671493632/nvi7WJf4_400x400.jpg', 'status': 'active'}]
 (Background on this error at: http://sqlalche.me/e/gkpj)
+[2019-03-23 15:56:50,741] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+Traceback (most recent call last):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
+    response = self.process_response(response)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
+    response = handler(response)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 36, in after_request
+    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
+  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

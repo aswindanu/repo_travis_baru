@@ -8,9 +8,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 #  ===== Flask =====
 app = Flask(__name__)
+CORS(app)
 
 # ===== Flask-RESTful =====
 api = Api(app, catch_all_404s=True)
@@ -41,18 +43,22 @@ from blueprints.auth.__init__ import bp_auth # Folder auth
 from blueprints.client.resources import bp_client # Folder client
 from blueprints.admin.resources import bp_admin # Folder admin
 from blueprints.users.resources import bp_user # Folder user
-from blueprints.barang.resources import bp_barang # Folder barang
+from blueprints.stuff.resources import bp_barang # Folder barang
 from blueprints.cart.resources import bp_cart # Folder cart
 from blueprints.transaction.resources import bp_transaction # Folder transaction
+from blueprints.bank.resources import bp_bank # Folder bank
+from blueprints.courier.resources import bp_courier # Folder courier
 
 # ===== Register blueprint =====
 app.register_blueprint(bp_auth, url_prefix='/auth') # Folder auth
 app.register_blueprint(bp_client, url_prefix='/client') # Folder client
 app.register_blueprint(bp_admin, url_prefix='/admin') # Folder admin
 app.register_blueprint(bp_user, url_prefix='/user') # Folder user
-app.register_blueprint(bp_barang, url_prefix='/barang') # Folder barang
+app.register_blueprint(bp_barang, url_prefix='/stuff') # Folder barang
 app.register_blueprint(bp_cart, url_prefix='/cart') # Folder cart
-app.register_blueprint(bp_transaction, url_prefix='/trabp_transaction') # Folder trabp_transaction
+app.register_blueprint(bp_transaction, url_prefix='/transaction') # Folder transaction
+app.register_blueprint(bp_bank, url_prefix='/bank') # Folder bank
+app.register_blueprint(bp_courier, url_prefix='/courier') # Folder courier
 
 # ===== Buat Tabel =====
 db.create_all()

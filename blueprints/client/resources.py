@@ -57,12 +57,19 @@ class ClientResource(Resource):
     # make user client
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('key', location='json', required=True)
-        parser.add_argument('secret', location='json', required=True)
+        parser.add_argument('username', location='json', required=True)
+        parser.add_argument('password', location='json', required=True)
+        parser.add_argument('fullname', location='json', required=True)
+        parser.add_argument('address', location='json', required=True)
+        parser.add_argument('zip_code', location='json', type=int, required=True)
+        parser.add_argument('image', location='json', required=True)
         args = parser.parse_args()
 
         # ==========(sentralize)==========
-        client = Users(None, 'client', args['key'], args['secret'], 'active')
+        images = args['image']
+        if images == None:
+            images = "http://pbs.twimg.com/profile_images/808475349671493632/nvi7WJf4_400x400.jpg"
+        client = Users(None, 'client', args['username'], args['password'], args['fullname'], args['address'], args['zip_code'], images, 'active')
         db.session.add(client)
         db.session.commit()
         return marshal(client, Users.response_field), 200, { 'Content-Type': 'application/json' }
@@ -72,16 +79,19 @@ class ClientResource(Resource):
     def put(self, id=None):
         if get_jwt_claims()['type'] == 'client':
             parser = reqparse.RequestParser()
-            parser.add_argument('key', location='json', required=True)
-            parser.add_argument('secret', location='json', required=True)
-            parser.add_argument('new_secret', location='json', required=True)
+            parser.add_argument('username', location='json', required=True)
+            parser.add_argument('password', location='json', required=True)
+            parser.add_argument('image', location='json')
+            parser.add_argument('new_password', location='json', required=True)
             args = parser.parse_args()
         
-            if get_jwt_claims()['key'] == args['key'] and get_jwt_claims()['secret'] == args['secret']:
+            if get_jwt_claims()['username'] == args['username'] and get_jwt_claims()['password'] == args['password']:
                 if get_jwt_claims()['status'] != 'active':
                     return { 'status':'DELETED', 'message': 'Already deleted' }, 200, { 'Content-Type': 'application/json' }
                 qry = Users.query.get(get_jwt_claims()['id'])
-                qry.secret = args['new_secret']
+                qry.password = args['new_password']
+                if args['image'] != None:
+                    qry.image = args['image']
                 db.session.commit()
             return { 'status':'COMPLETE', 'message': 'Change password complete' }, 200, { 'Content-Type': 'application/json' }
         return { 'status': 'LOGIN_FIRST', 'message': 'You should login first' }, 404, { 'Content-Type': 'application/json' }
@@ -89,16 +99,19 @@ class ClientResource(Resource):
     # for delete client by user/admin
     @jwt_required
     def delete(self, id=None):
-        if get_jwt_claims()['type'] == 'client':
-            parser = reqparse.RequestParser()
-            parser.add_argument('key', location='json', required=True)
-            parser.add_argument('secret', location='json', required=True)
-            args = parser.parse_args()
-        
-            if get_jwt_claims()['key'] == args['key'] and get_jwt_claims()['secret'] == args['secret']:
-                if get_jwt_claims()['status'] != 'active':
-                    return { 'status':'DELETED', 'message': 'Already deleted' }, 200, { 'Content-Type': 'application/json' }
-                qry = Users.query.get(get_jwt_claims()['id'])
+        # if get_jwt_claims()['type'] == 'client':
+        parser = reqparse.RequestParser()
+        parser.add_argument('username', location='json', required=True)
+        parser.add_argument('password', location='json', required=True)
+        args = parser.parse_args()
+
+        if get_jwt_claims()['status'] == 'deleted' and get_jwt_claims()['type'] == 'client':
+            return 'OKE'
+            return { 'status':'DELETED', 'message': 'Already deleted' }, 200, { 'Content-Type': 'application/json' }
+
+        if get_jwt_claims()['username'] == args['username']:# and get_jwt_claims()['password'] == args['password']:
+            # return "OKE"
+            qry = Users.query.get(get_jwt_claims()['id'])
         
         if get_jwt_claims()['type'] == 'admin':
             parser = reqparse.RequestParser()
@@ -114,7 +127,7 @@ class ClientResource(Resource):
                 if args['id'] == None:
                     return { 'status':'NEED_ID', 'message': 'Fill the ID of user first' }, 200, { 'Content-Type': 'application/json' }        
 
-        if qry != None and qry.status != 'deleted' and get_jwt_claims()['type'] == "client" or get_jwt_claims()['type'] == "admin":
+        if qry != None and qry.status != 'deleted':
             qry.status = 'deleted'
             db.session.commit()
             return { 'status':'COMPLETE', 'message': 'Delete complete' }, 200, { 'Content-Type': 'application/json' }
