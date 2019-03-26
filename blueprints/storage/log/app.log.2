@@ -1,114 +1,105 @@
-[2019-03-23 15:57:16,971] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+[2019-03-26 19:48:10,927] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /bank [POST]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 36, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 15:57:33,094] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/cursors.py", line 328, in _query
+    conn.query(q)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 732, in _read_query_result
+    result.read()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.DataError: (1406, "Data too long for column 'image' at row 1")
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 36, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 15:59:18,661] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 36, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:09:20,607] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 36, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:11:46,605] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:11:48,985] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
+    return fn(*args, **kwargs)
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/bank/resources.py", line 59, in post
+    db.session.commit()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1026, in commit
+    self.transaction.commit()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 493, in commit
+    self._prepare_impl()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 472, in _prepare_impl
+    self.session.flush()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 129, in reraise
+    raise value
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 1120, in _emit_insert_statements
+    statement, params
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/cursors.py", line 328, in _query
+    conn.query(q)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 732, in _read_query_result
+    result.read()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+sqlalchemy.exc.DataError: (pymysql.err.DataError) (1406, "Data too long for column 'image' at row 1")
+[SQL: INSERT INTO bank (nama_bank, no_rekening, nama_pemilik, image) VALUES (%(nama_bank)s, %(no_rekening)s, %(nama_pemilik)s, %(image)s)]
+[parameters: {'nama_bank': 'BTPN Jenius', 'no_rekening': 928384, 'nama_pemilik': 'Aswin', 'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAABFFBMVEUNotz///8Ood0Lo9oSoNgXpeH///r//v///vwAn9n7//wLot/7//8Andr///n//fwMoeOSzOg ... (5204 characters truncated) ... fGj/KxL6PXR2LxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCx/DfCp89g3eA2gp47j/oSvcT/Lb7/jQZ/5PcV88RfdXv4XW4aPiECHIWgAAAAASUVORK5CYII='}]
+(Background on this error at: http://sqlalche.me/e/9h9h)

@@ -10,6 +10,7 @@ from blueprints.auth import *
 # ===== Untuk import __init__.py =====
 from . import *
 from ..stuff import *
+# from ..stuff import *
 
 bp_cart = Blueprint('cart', __name__)
 api = Api(bp_cart)
@@ -21,23 +22,29 @@ class CartResource(Resource):
     @jwt_required
     def get(self, id=None):
         if id == None:
-            if get_jwt_claims()['type'] == 'client':
-                parser = reqparse.RequestParser()
-                parser.add_argument('p', location='args', type=int, default=1)
-                parser.add_argument('rp', location='args', type=int, default=5)
-                args = parser.parse_args()
+            parser = reqparse.RequestParser()
+            parser.add_argument('p', location='args', type=int, default=1)
+            parser.add_argument('rp', location='args', type=int, default=5)
+            args = parser.parse_args()
 
-                # Rumus (p*rp)-rp
-                offset = (args['p'] * args['rp']) - args['rp']
-                
-                # Memunculkan data semua (ditampilkan sesuai jumlah rp)
-                cart_all = Carts.query
-                get_all = []
-                for get_data in cart_all.limit(args['rp']).offset(offset).all():
+            # Rumus (p*rp)-rp
+            offset = (args['p'] * args['rp']) - args['rp']
+            
+            # Memunculkan data semua (ditampilkan sesuai jumlah rp)
+            cart_all = Carts.query
+            get_all = []
+
+            if get_jwt_claims()['type'] == 'client':
+                for get_data in cart_all:
                     if get_data.username == get_jwt_claims()['username']:
                         get_all.append(marshal(get_data, Carts.response_field))
                 return get_all, 200, { 'Content-Type': 'application/json' }
-            
+
+            if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
+                for get_data in cart_all.limit(args['rp']).offset(offset).all():
+                    get_all.append(marshal(get_data, Carts.response_field))
+                return get_all, 200, { 'Content-Type': 'application/json' }
+
         else:
             if get_jwt_claims()['type'] == 'client':
                 cart = Carts.query.get(id)
@@ -47,7 +54,7 @@ class CartResource(Resource):
 
     @jwt_required
     def post(self):
-        if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('resi', location='json', type=int, required=True)
             parser.add_argument('jumlah', location='json', type=int, required=True)
@@ -56,16 +63,24 @@ class CartResource(Resource):
             # Fungsi memanggil tabel barang
             barang = Stuffs.query.get(args['resi'])
             cart = Carts.query
-            cart_data = marshal(cart, Carts.response_field)
+            cart_data = []
+            for get_data in cart:
+                cart_data.append(marshal(get_data, Carts.response_field))
+            # return cart_data, 200, { 'Content-Type': 'application/json' }
             
             # ==========(sentralize)==========
             calc_cart = args['jumlah']
             cart_belanja = []
             cart_other = []
-            id_cart = 1
+            id_cart = 0
+            pjg_data = len(cart_data)
+            # return len(cart_data)
+            # return cart[0].username
+            # return cart_data[0]
 
-            if len(cart_data) > 1:
+            if pjg_data > 1:
                 for get_data in cart:
+                    # return get_data.username
                     if get_data.username == get_jwt_claims()['username']:
                         if get_data.resi == args['resi']:
                             calc_cart = get_data.jumlah + calc_cart
@@ -76,15 +91,16 @@ class CartResource(Resource):
                             cart_belanja.append(marshal(get_data, Carts.response_field))
                     if get_data.username != get_jwt_claims()['username']:
                         continue
-                        
+            # return cart_belanja
             # return "TES"
-            if len(cart_data) == 1 and cart.username == get_jwt_claims()['username'] and cart.resi == args['resi']:
+            if pjg_data == 1 and cart[0].username == get_jwt_claims()['username'] and cart[0].resi == args['resi']:
                 calc_cart = cart.jumlah + calc_cart
                 id_cart = args['resi']
-            
-            if len(cart_data) == 0:
+
+            if pjg_data == 0 or id_cart == 0 or id_cart == []:
                 id_cart = None
-            
+
+                        
             # Kalkulasi sisa barang            
             calc_barang = barang.jumlah - args['jumlah']
             # return "OKE"
@@ -101,7 +117,7 @@ class CartResource(Resource):
 
             # jika sisa 0, maka not available
             if calc_barang == 0:
-                barang.status = "Not_Available"
+                barang.status = "Not Available"
                 barang.jumlah = 0
             
             barang.status = barang.status
@@ -128,7 +144,7 @@ class CartResource(Resource):
 
     @jwt_required
     def put(self, id=None):
-        if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int, required=True)
             parser.add_argument('jumlah_tambah', location='json', type=int)
@@ -137,6 +153,7 @@ class CartResource(Resource):
             
             # ambil dari resi json
             cart = Carts.query.get(args['id'])
+            # return marshal(cart, Carts.response_field), 200, { 'Content-Type': 'application/json' }
             barang = Stuffs.query.get(cart.resi)
             # return marshal(cart, Carts.response_field), 200, { 'Content-Type': 'application/json' }
             # return get_jwt_claims()['username']
@@ -171,10 +188,10 @@ class CartResource(Resource):
 
                 # jika sisa 0, maka not available
                 if calc_barang == 0:
-                    barang.status = "Not_Available"
+                    barang.status = "Not Available"
                     barang.jumlah = 0
                 
-                if  barang.status == 'Not_Available' and  calc_barang > 0:
+                if  barang.status == 'Not Available' and  calc_barang > 0:
                     barang.status = 'Available'
                     barang.jumlah = calc_barang
 
@@ -202,30 +219,58 @@ class CartResource(Resource):
 
     @jwt_required
     def delete(self, id=None):
-        if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'client' or get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
-            parser.add_argument('id', location='json', type=int, required=True)
+            parser.add_argument('id', location='json', type=int)
+            parser.add_argument('username', location='args')
             args = parser.parse_args()
 
-            cart = Carts.query.get(args['id'])
-            barang = Stuffs.query.get(cart.resi)
+            cart_all = Carts.query
+            get_all = []
+            temp = []
 
-            if cart.username == get_jwt_claims()['username']:
-                total_barang = barang.jumlah + cart.jumlah
+            # return cart_all[1].username
+            for get_data in cart_all:
+                if get_data.id == args['id'] or get_data.id == id:
+                    if get_data.username == args['username'] or get_data.username == get_jwt_claims()['username']:
+                        get_all.append(get_data)
+                        
+                # temp.append(get_data)
+            
+            # return marshal(get_all, Carts.response_field)
+            # return get_all[0].jumlah
+            if get_all == [] or get_all == None:
+                return { 'status':'NOT_FOUND', 'message': 'Stuff in cart not found' }, 200, { 'Content-Type': 'application/json' }
+            # return get_all, 200, { 'Content-Type': 'application/json' }
+            # return "OKE"
 
-                barang.barang = barang.barang
-                barang.image = barang.image
-                barang.deskripsi = barang.deskripsi
-                barang.jenis = barang.jenis
-                barang.harga = barang.harga
-                barang.status = barang.status
-                barang.jumlah = total_barang
-                db.session.commit()
+            # if id == None:
+            #     cart = Carts.query.get(args['id'])
+            # if id != None:
+            barang = Stuffs.query.get(get_all[0].resi)
+            # return "OKE"
+            #     cart = Carts.query.get(id)
+            
+            # if get_jwt_claims()['type'] == 'admin':
+            #     if cart.username == args['username']:
+            #         total_barang = barang.jumlah + cart.jumlah    
 
-                db.session.delete(cart)
-                db.session.commit()
-                return { 'status':'COMPLETE', 'message': 'Delete complete' }, 200, { 'Content-Type': 'application/json' }
-            return { 'status':'NOT_FOUND', 'message': 'Stuff in cart not found' }, 200, { 'Content-Type': 'application/json' }
+            # if get_jwt_claims()['type'] == 'client':
+            #     if cart.username == get_jwt_claims()['username']:
+            total_barang = barang.jumlah + get_all[0].jumlah
+
+            barang.barang = barang.barang
+            barang.image = barang.image
+            barang.deskripsi = barang.deskripsi
+            barang.jenis = barang.jenis
+            barang.harga = barang.harga
+            barang.status = barang.status
+            barang.jumlah = total_barang
+            db.session.commit()
+
+            db.session.delete(get_all[0])
+            db.session.commit()
+            return { 'status':'COMPLETE', 'message': 'Delete complete' }, 200, { 'Content-Type': 'application/json' }
         return {'status': 'USERS_ONLY', 'message': 'Only for users'}, 404, { 'Content-Type': 'application/json' }
 
 

@@ -73,7 +73,7 @@ class AdminResource(Resource):
             if args['name'] is not None:
                 qry_all = qry_all.filter(Users.id.like("%"+args['name']+"%"))
 
-            if get_jwt_claims()['type'] == "admin":
+            if get_jwt_claims()['type'] == "admin" or get_jwt_claims()['type'] == "superadmin":
                 for get_data in qry_all.limit(args['rp']).offset(offset).all():
                     get_all.append(marshal(get_data, Users.response_field))
                 return get_all, 200, {'Content-Type': 'application/json' }
@@ -84,7 +84,7 @@ class AdminResource(Resource):
         else:
             qry = Users.query.get(id)
             if qry is not None:
-                if get_jwt_claims()['type'] == "admin":
+                if get_jwt_claims()['type'] == "admin" or get_jwt_claims()['type'] == "superadmin":
                     return marshal(qry, Users.response_field), 200, { 'Content-Type': 'application/json' }
                 
                 if get_jwt_claims()['type'] == "client":
@@ -105,17 +105,19 @@ class AdminResource(Resource):
         args = parser.parse_args()
 
         # ==========(sentralize)==========
-        if args['code_admin'] == 'warcr4ft':
+        if args['code_admin'] == 'admin':
             admin = Users(None, 'admin', args['username'], args['password'], args['fullname'], args['address'], args['zip_code'], args['image'], 'active')
-            db.session.add(admin)
-            db.session.commit()
-            return marshal(admin, Users.response_field), 200, { 'Content-Type': 'application/json' }
-        return { 'status': 'ADMIN_ONLY', 'message': 'Only allowed for admin' }, 404, { 'Content-Type': 'application/json' }
+        if args['code_admin'] == 'warcr4ft':
+            admin = Users(None, 'superadmin', args['username'], args['password'], args['fullname'], args['address'], args['zip_code'], args['image'], 'active')    
+        db.session.add(admin)
+        db.session.commit()
+        return marshal(admin, Users.response_field), 200, { 'Content-Type': 'application/json' }
+        # return { 'status': 'ADMIN_ONLY', 'message': 'Only allowed for admin' }, 404, { 'Content-Type': 'application/json' }
 
     # for reactivate user client/admin
     @jwt_required
     def put(self, id=None):
-        if get_jwt_claims()['type'] == "admin":
+        if get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int)
             args = parser.parse_args()
@@ -141,11 +143,12 @@ class AdminResource(Resource):
     # for delete by ADMIN only
     @jwt_required
     def delete(self, id=None):
-        if get_jwt_claims()['type'] == "admin":
+        if get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int)
+            parser.add_argument('id', location='args', type=int)
             args = parser.parse_args()
-        
+            
             if id != None:
                 qry = Users.query.get(id)
 
@@ -159,6 +162,7 @@ class AdminResource(Resource):
                 return { 'status': 'NOT_FOUND', 'message': 'ID not found' }, 404, { 'Content-Type': 'application/json' } 
             if qry != None and qry.status != 'deleted':
                 qry.status = 'deleted'
+                # db.session.delete(qry)
                 db.session.commit()
                 return { 'status':'COMPLETE', 'message': 'Delete complete' }, 200, { 'Content-Type': 'application/json' }
 

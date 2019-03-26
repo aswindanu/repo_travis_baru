@@ -15,6 +15,8 @@ class Transactions(db.Model):
     pembayaran = db.Column(db.String(50))
     pengiriman = db.Column(db.String(50))
     status = db.Column(db.String(50))
+    rekening_bayar = db.Column(db.Integer)
+    nama_pembayar = db.Column(db.String(50))
 
     # ===== Respon Field =====
     response_field = {
@@ -23,17 +25,21 @@ class Transactions(db.Model):
         'total_harga' : fields.Integer,
         'pembayaran' : fields.String,
         'pengiriman' : fields.String,
-        'status' : fields.String
+        'status' : fields.String,
+        'rekening_bayar' : fields.Integer,
+        'nama_pembayar' : fields.String,
 
     }
 
-    def __init__(self, id, username, total_harga, pembayaran, pengiriman, status):
+    def __init__(self, id, username, total_harga, pembayaran, pengiriman, status, rekening_bayar, nama_pembayar):
         self.id = id
         self.username = username
         self.total_harga = total_harga
         self.pembayaran = pembayaran
         self.pengiriman = pengiriman
         self.status = status
+        self.rekening_bayar = rekening_bayar
+        self.nama_pembayar = nama_pembayar
 
 
     def __repr__(self):

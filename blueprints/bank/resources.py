@@ -45,7 +45,7 @@ class BankResource(Resource):
 
     @jwt_required
     def post(self):
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('nama_bank', location='json', required=True)
             parser.add_argument('no_rekening', location='json', type=int, required=True)
@@ -62,7 +62,7 @@ class BankResource(Resource):
 
     @jwt_required
     def put(self, id=None):
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int, required=True)
             parser.add_argument('nama_bank', location='json')
@@ -98,12 +98,16 @@ class BankResource(Resource):
 
     @jwt_required
     def delete(self, id=None):
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
-            parser.add_argument('id', location='json', type=int, required=True)
+            parser.add_argument('id', location='json', type=int)
             args = parser.parse_args()
+            # return "TES"
 
-            bank = Banks.query.get(args['id'])
+            if id == None:
+                bank = Banks.query.get(args['id'])
+            if id != None:
+                bank = Banks.query.get(id)
 
             if bank == None:
                 return { 'status':'NOT_FOUND', 'message': 'Bank data not found' }, 200, { 'Content-Type': 'application/json' }

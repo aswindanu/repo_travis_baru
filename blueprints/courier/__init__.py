@@ -12,18 +12,21 @@ class Couriers(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nama_kurir = db.Column(db.String(50)) 
     mode_pengiriman = db.Column(db.String(50))
+    image = db.Column(db.String(200))
 
     # ===== Respon Field =====
     response_field = {
         'id': fields.Integer,
         'nama_kurir' : fields.String,
-        'mode_pengiriman' : fields.String
+        'mode_pengiriman' : fields.String,
+        'image' : fields.String
     }
     
-    def __init__(self, id, nama_kurir, mode_pengiriman):
+    def __init__(self, id, nama_kurir, mode_pengiriman, image):
         self.id = id
         self.nama_kurir = nama_kurir
         self.mode_pengiriman = mode_pengiriman
+        self.image = image
 
     def __repr__(self):
         return '<Courier %r>' % self.id

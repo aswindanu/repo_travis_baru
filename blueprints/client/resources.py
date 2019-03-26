@@ -35,7 +35,7 @@ class ClientResource(Resource):
             if args['name'] is not None:
                 qry_all = qry_all.filter(Users.id.like("%"+args['name']+"%"))
 
-            if get_jwt_claims()['type'] == "admin":
+            if get_jwt_claims()['type'] == "admin" or get_jwt_claims()['type'] == "superadmin":
                 for get_data in qry_all.limit(args['rp']).offset(offset).all():
                     get_all.append(marshal(get_data, Users.response_field))
                 return get_all, 200, {'Content-Type': 'application/json' }
@@ -47,7 +47,7 @@ class ClientResource(Resource):
         else:
             qry = Users.query.get(id)
             if qry is not None:
-                if get_jwt_claims()['type'] == "admin":
+                if get_jwt_claims()['type'] == "admin" or get_jwt_claims()['type'] == "superadmin":
                     return marshal(qry, Users.response_field), 200, { 'Content-Type': 'application/json' }
                 
                 if get_jwt_claims()['type'] == "client" and get_jwt_claims()['id'] == id:
@@ -81,19 +81,30 @@ class ClientResource(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('username', location='json', required=True)
             parser.add_argument('password', location='json', required=True)
+            parser.add_argument('fullname', location='json')
+            parser.add_argument('address', location='json')
+            parser.add_argument('zip_code', location='json')
             parser.add_argument('image', location='json')
-            parser.add_argument('new_password', location='json', required=True)
+            parser.add_argument('new_password', location='json')
             args = parser.parse_args()
+            # return "tes"
         
             if get_jwt_claims()['username'] == args['username'] and get_jwt_claims()['password'] == args['password']:
                 if get_jwt_claims()['status'] != 'active':
                     return { 'status':'DELETED', 'message': 'Already deleted' }, 200, { 'Content-Type': 'application/json' }
                 qry = Users.query.get(get_jwt_claims()['id'])
-                qry.password = args['new_password']
+                if args['new_password'] != None:
+                    qry.password = args['new_password']
+                if args['fullname'] != None:
+                    qry.fullname = args['fullname']
+                if args['address'] != None:
+                    qry.address = args['address']
+                if args['zip_code'] != None:
+                    qry.zip_code = args['zip_code']
                 if args['image'] != None:
                     qry.image = args['image']
                 db.session.commit()
-            return { 'status':'COMPLETE', 'message': 'Change password complete' }, 200, { 'Content-Type': 'application/json' }
+                return { 'status':'COMPLETE', 'message': 'Change password complete' }, 200, { 'Content-Type': 'application/json' }
         return { 'status': 'LOGIN_FIRST', 'message': 'You should login first' }, 404, { 'Content-Type': 'application/json' }
 
     # for delete client by user/admin
@@ -113,7 +124,7 @@ class ClientResource(Resource):
             # return "OKE"
             qry = Users.query.get(get_jwt_claims()['id'])
         
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('id', location='json', type=int)
             args = parser.parse_args()
@@ -127,7 +138,7 @@ class ClientResource(Resource):
                 if args['id'] == None:
                     return { 'status':'NEED_ID', 'message': 'Fill the ID of user first' }, 200, { 'Content-Type': 'application/json' }        
 
-        if qry != None and qry.status != 'deleted':
+        if qry != None and qry.status != 'deleted' and qry.type != 'admin' or qry.type != 'superadmin':
             qry.status = 'deleted'
             db.session.commit()
             return { 'status':'COMPLETE', 'message': 'Delete complete' }, 200, { 'Content-Type': 'application/json' }

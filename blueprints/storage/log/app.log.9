@@ -1,4 +1,36 @@
-[2019-03-23 02:33:31,857] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
+[2019-03-26 19:19:32,003] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /client [GET]
+Traceback (most recent call last):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 180, in _load
+    signing_input, crypto_segment = jwt.rsplit(b'.', 1)
+ValueError: not enough values to unpack (expected 2, got 1)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 103, in wrapper
+    verify_jwt_in_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data = _decode_jwt_from_request(request_type='access')
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 267, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 80, in decode_token
+    encoded_token, verify=False, algorithms=config.algorithm
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 84, in decode
+    payload, _, _, _ = self._load(jwt)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 183, in _load
+    raise DecodeError('Not enough segments')
+jwt.exceptions.DecodeError: Not enough segments
+[2019-03-26 19:19:57,967] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [POST]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -12,10 +44,36 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 90, in put
-    transaksi_detail = Transactions.query.get(get_jwt_claims['id'])
-TypeError: 'function' object is not subscriptable
-[2019-03-23 02:35:11,757] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 113, in post
+    db.session.commit()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1026, in commit
+    self.transaction.commit()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 493, in commit
+    self._prepare_impl()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 472, in _prepare_impl
+    self.session.flush()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 129, in reraise
+    raise value
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 408, in _organize_states_for_save
+    % (state_str(state), instance_key, state_str(existing))
+sqlalchemy.orm.exc.FlushError: New instance <Transactions at 0x7fd6416f1160> with identity key (<class 'blueprints.transaction.Transactions'>, (3,), None) conflicts with persistent instance <Transactions at 0x7fd6416f1d30>
+[2019-03-26 19:19:59,991] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [POST]
 Traceback (most recent call last):
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
@@ -29,90 +87,32 @@ Traceback (most recent call last):
     resp = meth(*args, **kwargs)
   File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
     return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 91, in put
-    courier = Couriers.query.get(args['pengiriman'])
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
-    return self._get_impl(ident, loading.load_on_pk_identity)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
-    if len(primary_key_identity) != len(mapper.primary_key):
-TypeError: object of type 'NoneType' has no len()
-[2019-03-23 02:35:59,159] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 91, in put
-    courier = Couriers.query.get(args['pengiriman'])
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
-    return self._get_impl(ident, loading.load_on_pk_identity)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
-    if len(primary_key_identity) != len(mapper.primary_key):
-TypeError: object of type 'NoneType' has no len()
-[2019-03-23 02:36:49,353] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 91, in put
-    courier = Couriers.query.get(args['pengiriman'])
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
-    return self._get_impl(ident, loading.load_on_pk_identity)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
-    if len(primary_key_identity) != len(mapper.primary_key):
-TypeError: object of type 'NoneType' has no len()
-[2019-03-23 02:37:26,228] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 92, in put
-    courier = Couriers.query.get(args['pengiriman'])
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
-    return self._get_impl(ident, loading.load_on_pk_identity)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1026, in _get_impl
-    if len(primary_key_identity) != len(mapper.primary_key):
-TypeError: object of type 'NoneType' has no len()
-[2019-03-23 02:38:24,082] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /transaction [PUT]
-Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 104, in wrapper
-    return fn(*args, **kwargs)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 102, in put
-    transaksi_detail.pembayaran = bank.nama_bank
-AttributeError: 'NoneType' object has no attribute 'nama_bank'
+  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/transaction/resources.py", line 113, in post
+    db.session.commit()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1026, in commit
+    self.transaction.commit()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 493, in commit
+    self._prepare_impl()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 472, in _prepare_impl
+    self.session.flush()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 129, in reraise
+    raise value
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 213, in save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 408, in _organize_states_for_save
+    % (state_str(state), instance_key, state_str(existing))
+sqlalchemy.orm.exc.FlushError: New instance <Transactions at 0x7fd6416ffcf8> with identity key (<class 'blueprints.transaction.Transactions'>, (3,), None) conflicts with persistent instance <Transactions at 0x7fd6416f1550>

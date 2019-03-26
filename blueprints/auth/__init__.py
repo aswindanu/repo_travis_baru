@@ -16,10 +16,11 @@ class CreateTokenResources(Resource):
         parser.add_argument('password', location='json', required=True)
         args = parser.parse_args()
         token_data = Users.query.filter_by(username=args['username']).filter_by(password=args['password']).first()
+        
         # ==========(sentralize)==========
         if token_data is not None:
             token = create_access_token(marshal(token_data, Users.response_field))
-            return{ 'token': token }, 200
+            return{ 'username': token_data.username, 'type': token_data.type, 'token': token }, 200
         else:
             return{ 'status': 'UNAUTHORIZED', 'message': 'Invalid username or password' }, 401
 

@@ -1,114 +1,128 @@
-[2019-03-23 16:11:51,541] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+[2019-03-26 19:48:43,540] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /admin [GET]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:12:56,023] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 180, in _load
+    signing_input, crypto_segment = jwt.rsplit(b'.', 1)
+ValueError: not enough values to unpack (expected 2, got 1)
+
+During handling of the above exception, another exception occurred:
+
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:14:48,158] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 103, in wrapper
+    verify_jwt_in_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data = _decode_jwt_from_request(request_type='access')
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 267, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 80, in decode_token
+    encoded_token, verify=False, algorithms=config.algorithm
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 84, in decode
+    payload, _, _, _ = self._load(jwt)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 183, in _load
+    raise DecodeError('Not enough segments')
+jwt.exceptions.DecodeError: Not enough segments
+[2019-03-26 20:16:30,541] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /client [GET]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:16:23,677] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 180, in _load
+    signing_input, crypto_segment = jwt.rsplit(b'.', 1)
+ValueError: not enough values to unpack (expected 2, got 1)
+
+During handling of the above exception, another exception occurred:
+
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:17:21,855] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 103, in wrapper
+    verify_jwt_in_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data = _decode_jwt_from_request(request_type='access')
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 267, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 80, in decode_token
+    encoded_token, verify=False, algorithms=config.algorithm
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 84, in decode
+    payload, _, _, _ = self._load(jwt)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 183, in _load
+    raise DecodeError('Not enough segments')
+jwt.exceptions.DecodeError: Not enough segments
+[2019-03-26 20:17:18,402] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /client [GET]
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-[2019-03-23 16:19:53,436] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /auth [OPTIONS]
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 180, in _load
+    signing_input, crypto_segment = jwt.rsplit(b'.', 1)
+ValueError: not enough values to unpack (expected 2, got 1)
+
+During handling of the above exception, another exception occurred:
+
 Traceback (most recent call last):
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1816, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1833, in finalize_request
-    response = self.process_response(response)
-  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 2112, in process_response
-    response = handler(response)
-  File "/home/alphatech/Documents/BIG/Fase awal/env_eCommerce/eCommerce/blueprints/__init__.py", line 38, in after_request
-    app.logger.warning("REQUEST_LOG\t%s %s", json.dumps, request.method, request.url, ({ 'request': request.get_json(), 'response': json.loads(response.data.decode('utf-8')) }))
-  File "/usr/lib/python3.6/json/__init__.py", line 354, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.6/json/decoder.py", line 339, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.6/json/decoder.py", line 357, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 103, in wrapper
+    verify_jwt_in_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data = _decode_jwt_from_request(request_type='access')
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 267, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 80, in decode_token
+    encoded_token, verify=False, algorithms=config.algorithm
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 84, in decode
+    payload, _, _, _ = self._load(jwt)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 183, in _load
+    raise DecodeError('Not enough segments')
+jwt.exceptions.DecodeError: Not enough segments
+[2019-03-26 20:25:47,578] {/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py:1761} ERROR - Exception on /cart [GET]
+Traceback (most recent call last):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 180, in _load
+    signing_input, crypto_segment = jwt.rsplit(b'.', 1)
+ValueError: not enough values to unpack (expected 2, got 1)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask/views.py", line 88, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 103, in wrapper
+    verify_jwt_in_request()
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data = _decode_jwt_from_request(request_type='access')
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 267, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 80, in decode_token
+    encoded_token, verify=False, algorithms=config.algorithm
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jwt.py", line 84, in decode
+    payload, _, _, _ = self._load(jwt)
+  File "/home/alphatech/.local/lib/python3.6/site-packages/jwt/api_jws.py", line 183, in _load
+    raise DecodeError('Not enough segments')
+jwt.exceptions.DecodeError: Not enough segments

@@ -21,15 +21,21 @@ class BarangResource(Resource):
         if id == None:
             parser = reqparse.RequestParser()
             parser.add_argument('p', location='args', type=int, default=1)
-            parser.add_argument('rp', location='args', type=int, default=5)
+            parser.add_argument('rp', location='args', type=int, default=12)
             parser.add_argument('barang', location='args')
             parser.add_argument('jenis', location='args')
+            parser.add_argument('resi', location='args')
             args = parser.parse_args()
 
             # Rumus (p*rp)-rp
             offset = (args['p'] * args['rp']) - args['rp']
             
             # Memunculkan data semua (ditampilkan sesuai jumlah rp)
+            # return args['resi']
+            if args['resi'] is not None:
+                barang_all = Stuffs.query.get(args['resi'])
+                return marshal(barang_all, Stuffs.response_field), 200, { 'Content-Type': 'application/json' }
+            
             barang_all = Stuffs.query
 
             # search dari nama barang
@@ -41,7 +47,7 @@ class BarangResource(Resource):
                 barang_all = barang_all.filter(Stuffs.jenis.like("%"+args['jenis']+"%"))
 
             get_all = []
-            for get_data in barang_all.limit(args['rp']).offset(offset).all():
+            for get_data in barang_all.all():
                 get_all.append(marshal(get_data, Stuffs.response_field))
             return get_all, 200, { 'Content-Type': 'application/json' }
             
@@ -53,7 +59,7 @@ class BarangResource(Resource):
 
     @jwt_required
     def post(self):
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             resi = random.randrange(10000000, 99999999)
             parser.add_argument('barang', location='json', required=True)
@@ -73,7 +79,7 @@ class BarangResource(Resource):
 
     @jwt_required
     def put(self, id=None):
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('resi', location='json')
             parser.add_argument('barang', location='json')
@@ -94,47 +100,55 @@ class BarangResource(Resource):
                 barang = Stuffs.query.get(id) 
             
             temp = barang
+            # return temp.status
                 # ==========(sentralize)=========
             if barang != None:
-                if args['barang'] != None:
+                if args['barang'] != None or args['barang'] != "":
                     barang.barang = args['barang']
-                if args['image'] != None:
+                if args['image'] != None or args['image'] != "":
                     barang.image = args['image']
-                if args['deskripsi'] != None:
+                if args['deskripsi'] != None or args['deskripsi'] != "":
                     barang.deskripsi = args['deskripsi']
-                if args['jenis'] != None:
+                if args['jenis'] != None or args['jenis'] != "":
                     barang.jenis = args['jenis']
-                if args['harga'] != None:
+                if args['harga'] != None or args['harga'] != "":
                     barang.harga = args['harga']
-                if args['status'] != None:
+                if temp.jumlah == "0":
+                    barang.status = temp.status
+                if temp.jumlah != "0":
+                    barang.status = 'Available'
+                if args['status'] != None or args['status'] != "":
                     barang.status = args['status']
-                if args['jumlah'] != None:
+                if args['jumlah'] != None or args['jumlah'] != "":
                     barang.jumlah = args['jumlah']
-                
-                if barang.barang == None:
-                    barang.barang = temp['barang']
-                if barang.image == None:
-                    barang.image = temp['image']
-                if barang.deskripsi == None:
-                    barang.deskripsi = temp['deskripsi']
-                if barang.jenis == None:
-                    barang.jenis = temp['jenis']
-                if barang.harga == None:
-                    barang.harga = temp['harga']
-                if barang.status == None:
-                    barang.status = temp['status']
-                if barang.jumlah == None:
-                    barang.jumlah = temp['jumlah']
-
                 db.session.commit()
                 return marshal(barang, Stuffs.response_field), 200, { 'Content-Type': 'application/json' }
+                
+                if barang.barang == None or barang.barang == "":
+                    barang.barang = temp.barang
+                if barang.image == None or barang.image == "":
+                    barang.image = temp.image
+                if barang.deskripsi == None or barang.deskripsi == "":
+                    barang.deskripsi = temp.image
+                if barang.jenis == None or barang.jenis == "":
+                    barang.jenis = temp.jenis
+                if barang.harga == None or barang.harga == "":
+                    barang.harga = temp.harga
+                if barang.status == None or barang.status == "":
+                    if temp.jumlah == "0":
+                        barang.status = temp.status
+                    if temp.jumlah != "0":
+                        barang.status = 'Available'
+                if barang.jumlah == None or barang.jumlah == "":
+                    barang.jumlah = temp.jumlah
+
             if barang == None:
                 return { 'status': 'NOT_FOUND', 'message': 'Stuff not found' }, 404, { 'Content-Type': 'application/json' }                
         return { 'status': 'ADMIN_ONLY', 'message': 'Only allowed for admin' }, 404, { 'Content-Type': 'application/json' }
 
     @jwt_required
     def delete(self, id=None):
-        if get_jwt_claims()['type'] == 'admin':
+        if get_jwt_claims()['type'] == 'admin' or get_jwt_claims()['type'] == "superadmin":
             parser = reqparse.RequestParser()
             parser.add_argument('resi', location='json', type=int)
             args = parser.parse_args()
