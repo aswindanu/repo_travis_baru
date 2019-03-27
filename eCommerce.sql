@@ -107,6 +107,7 @@ CREATE TABLE `courier` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama_kurir` varchar(50) DEFAULT NULL,
   `mode_pengiriman` varchar(50) DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -117,7 +118,6 @@ CREATE TABLE `courier` (
 
 LOCK TABLES `courier` WRITE;
 /*!40000 ALTER TABLE `courier` DISABLE KEYS */;
-INSERT INTO `courier` VALUES (1,'JNE','YES (Yakin Esok Sampai)'),(2,'JNE','YES'),(3,'JNT','Express'),(4,'JNT','Regular'),(7,'Kantor pos','Regular');
 /*!40000 ALTER TABLE `courier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,6 +166,8 @@ CREATE TABLE `transaction` (
   `pembayaran` varchar(50) DEFAULT NULL,
   `pengiriman` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
+  `rekening_bayar` int(11) DEFAULT NULL,
+  `nama_pembayar` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -176,7 +178,6 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
-INSERT INTO `transaction` VALUES (2,'aswin',120000,'BRI','JNE','Ready to pay');
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
